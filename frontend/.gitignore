@@ -8,6 +8,10 @@ venv/
 .venv/
 env/
 
+
+node_modules/
+dist/
+
 # Django
 *.log
 db.sqlite3
