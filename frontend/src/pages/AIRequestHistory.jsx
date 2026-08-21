@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 
 function AIRequestHistory() {
   const navigate = useNavigate();
@@ -23,15 +23,7 @@ function AIRequestHistory() {
       }
 
       try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/ai-requests/",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
+        const response = await api.get("/ai-requests/");
         console.log("AI Request History:", response.data);
 
         setRequests(response.data);

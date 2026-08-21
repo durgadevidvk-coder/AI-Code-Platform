@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 
 function AICodeDocumentation() {
   const navigate = useNavigate();
@@ -31,15 +31,7 @@ function AICodeDocumentation() {
       }
 
       try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/projects/",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
+       const response = await api.get("/projects/");
         setProjects(response.data);
 
         if (response.data.length > 0) {
@@ -120,20 +112,14 @@ ${code}
 `;
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/ai-requests/",
-        {
-          project: Number(selectedProject),
-          prompt: documentationPrompt,
-          request_type: "documentation",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+     const response = await api.post(
+  "/ai-requests/",
+  {
+    project: Number(selectedProject),
+    prompt: documentationPrompt,
+    request_type: "documentation",
+  }
+);
 
       console.log(
         "Documentation response:",

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
+
+import api from "../services/api";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -16,8 +17,8 @@ function Login() {
     try {
       console.log("Sending username:", username);
 
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/token/",
+      const response = await api.post(
+        "/token/",
         {
           username: username.trim(),
           password: password,

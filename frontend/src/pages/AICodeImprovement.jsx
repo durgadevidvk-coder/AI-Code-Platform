@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 
 function AICodeImprovement() {
   const navigate = useNavigate();
@@ -31,15 +31,7 @@ function AICodeImprovement() {
       }
 
       try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/projects/",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
+       const response = await api.get("/projects/");
         console.log("Projects:", response.data);
 
         setProjects(response.data);
@@ -118,21 +110,14 @@ ${code}
 `;
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/ai-requests/",
-        {
-          project: Number(selectedProject),
-          prompt: improvementPrompt,
-          request_type: "code_improvement",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
+     const response = await api.post(
+  "/ai-requests/",
+  {
+    project: Number(selectedProject),
+    prompt: improvementPrompt,
+    request_type: "code_improvement",
+  }
+);
       console.log(
         "Improvement response:",
         response.data

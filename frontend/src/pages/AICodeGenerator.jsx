@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
+import api from "../services/api";
 function AICodeGenerator() {
   const navigate = useNavigate();
 
@@ -34,15 +34,8 @@ function AICodeGenerator() {
       }
 
       try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/projects/",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
+        
+        const response = await api.get("/projects/");
         console.log("Projects:", response.data);
 
         setProjects(response.data);
@@ -95,20 +88,14 @@ function AICodeGenerator() {
     }
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/ai-requests/",
-        {
-          project: Number(selectedProject),
-          prompt: prompt,
-          request_type: "code_generation",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await api.post(
+  "/ai-requests/",
+  {
+    project: Number(selectedProject),
+    prompt: prompt,
+    request_type: "code_generation",
+  }
+);
 
       console.log("AI response:", response.data);
 
@@ -164,21 +151,15 @@ function AICodeGenerator() {
     setSuccess("");
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/files/",
-        {
-          project: Number(selectedProject),
-          name: fileName.trim(),
-          language: fileLanguage,
-          content: generatedCode,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await api.post(
+  "/files/",
+  {
+    project: Number(selectedProject),
+    name: fileName.trim(),
+    language: fileLanguage,
+    content: generatedCode,
+  }
+);
 
       console.log("File saved:", response.data);
 

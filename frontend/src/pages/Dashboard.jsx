@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 
 function Dashboard({ onLogout }) {
   const navigate = useNavigate();
@@ -27,28 +27,14 @@ const [creatingProject, setCreatingProject] = useState(false);
 
       try {
         // Fetch AI Requests
-        const aiResponse = await axios.get(
-          "http://127.0.0.1:8000/api/ai-requests/",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+       const aiResponse = await api.get("/ai-requests/");
 
         console.log("AI Requests:", aiResponse.data);
 
         setAiRequests(aiResponse.data);
 
         // Fetch Projects
-        const projectResponse = await axios.get(
-          "http://127.0.0.1:8000/api/projects/",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const projectResponse = await api.get("/projects/");
 
         console.log("Projects:", projectResponse.data);
 
@@ -103,20 +89,14 @@ const handleCreateProject = async (event) => {
   setCreatingProject(true);
 
   try {
-    const response = await axios.post(
-      "http://127.0.0.1:8000/api/projects/",
-      {
-        name: projectName,
-        description: projectDescription,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
+    
+const response = await api.post(
+  "/projects/",
+  {
+    name: projectName,
+    description: projectDescription,
+  }
+);
     console.log("Project created:", response.data);
 
     setProjects((previousProjects) => [
