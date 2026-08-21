@@ -209,25 +209,33 @@ EMAIL_BACKEND = (
 # ============================================================
 
 
+# ============================================================
+# CORS
+# ============================================================
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://ai-code-platform-steel.vercel.app",
+    "https://ai-code-platform-kfvy7xaxb-durgadevidvk-coders-projects.vercel.app",
 ]
-
 
 CSRF_TRUSTED_ORIGINS = [
     "https://ai-code-platform-steel.vercel.app",
+    "https://ai-code-platform-kfvy7xaxb-durgadevidvk-coders-projects.vercel.app",
 ]
-# Render frontend URL will be added later.
+
 FRONTEND_URL = os.getenv("FRONTEND_URL")
 
 if FRONTEND_URL:
-    CORS_ALLOWED_ORIGINS.append(
-        FRONTEND_URL.rstrip("/")
-    )
+    FRONTEND_URL = FRONTEND_URL.rstrip("/")
+
+    if FRONTEND_URL not in CORS_ALLOWED_ORIGINS:
+        CORS_ALLOWED_ORIGINS.append(FRONTEND_URL)
+
+    if FRONTEND_URL not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(FRONTEND_URL)
 
 CORS_ALLOW_CREDENTIALS = True
-
 
 # ============================================================
 # REST FRAMEWORK
