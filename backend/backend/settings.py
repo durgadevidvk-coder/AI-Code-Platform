@@ -213,15 +213,21 @@ EMAIL_BACKEND = (
 # CORS
 # ============================================================
 
+# ============================================================
+# CORS
+# ============================================================
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://ai-code-platform-steel.vercel.app",
-    "https://ai-code-platform-kfvy7xaxb-durgadevidvk-coders-projects.vercel.app",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://ai-code-platform-[a-z0-9-]+-durgadevidvk-coders-projects\.vercel\.app$",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://ai-code-platform-steel.vercel.app",
-    "https://ai-code-platform-kfvy7xaxb-durgadevidvk-coders-projects.vercel.app",
 ]
 
 FRONTEND_URL = os.getenv("FRONTEND_URL")
