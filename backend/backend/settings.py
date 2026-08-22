@@ -23,7 +23,7 @@ SECRET_KEY = os.getenv(
     "django-insecure-development-only-key"
 )
 
-DEBUG = os.getenv("DEBUG", "True").lower() == "true"
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 ALLOWED_HOSTS = [
     host.strip()
@@ -203,6 +203,7 @@ EMAIL_BACKEND = (
     "django.core.mail.backends.console.EmailBackend"
 )
 
+
 # ============================================================
 # CORS
 # ============================================================
@@ -210,6 +211,7 @@ EMAIL_BACKEND = (
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://ai-code-platform-steel.vercel.app",
+    "https://ai-code-platform-git-main-durgadevidvk-coders-projects.vercel.app",
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
@@ -218,6 +220,7 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 
 CSRF_TRUSTED_ORIGINS = [
     "https://ai-code-platform-steel.vercel.app",
+    "https://ai-code-platform-git-main-durgadevidvk-coders-projects.vercel.app",
 ]
 
 FRONTEND_URL = os.getenv("FRONTEND_URL")
@@ -232,7 +235,6 @@ if FRONTEND_URL:
         CSRF_TRUSTED_ORIGINS.append(FRONTEND_URL)
 
 CORS_ALLOW_CREDENTIALS = True
-
 
 # ============================================================
 # REST FRAMEWORK
