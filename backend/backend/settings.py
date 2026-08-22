@@ -23,7 +23,7 @@ SECRET_KEY = os.getenv(
     "django-insecure-development-only-key"
 )
 
-DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
 ALLOWED_HOSTS = [
     host.strip()
